@@ -1,0 +1,39 @@
+[{
+  "_id": {
+    "$oid": "64c2ba3c0004c0817d9932f9"
+  },
+  "title": "product 1",
+  "description": "des product 1",
+  "price": 200,
+  "user": {
+    "$oid": "64c10775e794420b87b7dfc7"
+  },
+  "image": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64c2ba3c0004c0817d9932fb"
+  },
+  "title": "product 3",
+  "description": "des product 3",
+  "price": 400,
+  "user": {
+    "$oid": "64c10775e794420b87b7dfc7"
+  },
+  "image": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64c2bacd0004c0817d993303"
+  },
+  "title": "product 1",
+  "description": "des product 1",
+  "price": 200,
+  "user": {
+    "$oid": "64c10785e794420b87b7dfcd"
+  },
+  "image": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+  "__v": 0
+}]

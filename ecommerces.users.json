@@ -1,0 +1,42 @@
+[{
+  "_id": {
+    "$oid": "64c10775e794420b87b7dfc7"
+  },
+  "username": "test",
+  "email": "test@gmail.com",
+  "password": "$2b$10$87m3apNDx98aSc8ymGthkeP8XUXF6lli11mip69lgcg5kQe.rfAzu",
+  "profilePhoto": {
+    "url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    "publicId": null
+  },
+  "cart": [],
+  "__v": 58
+},
+{
+  "_id": {
+    "$oid": "64c1077de794420b87b7dfca"
+  },
+  "username": "abd",
+  "email": "abd@gmail.com",
+  "password": "$2b$10$FF86veSEl.kgRpeJlsPVMe/gX473R8MO0gBciTCDTxGPiWkf/kcFS",
+  "profilePhoto": {
+    "url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    "publicId": null
+  },
+  "cart": [],
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "64c10785e794420b87b7dfcd"
+  },
+  "username": "ahmad",
+  "email": "ahmad@gmail.com",
+  "password": "$2b$10$PeGmiH/SP3VckGQs.lMiVeHXOPPYUiThkI3YH8MouMTLd/Vq8LfAe",
+  "profilePhoto": {
+    "url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    "publicId": null
+  },
+  "cart": [],
+  "__v": 2
+}]
