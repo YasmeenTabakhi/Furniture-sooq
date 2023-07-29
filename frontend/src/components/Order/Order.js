@@ -69,11 +69,6 @@ export function Order() {
                         $120.00
                     </Text>
                 </div>
-                {/* <Link to={"/confirmation"}>
-                <Button  radius="sm" style={{ width: "100%" }}>
-                    Place Order
-                </Button>
-                </Link> */}
             </Card.Section>
 
         </Card>

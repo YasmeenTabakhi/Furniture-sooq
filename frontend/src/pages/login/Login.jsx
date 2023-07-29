@@ -35,7 +35,7 @@ export default function AuthenticationForm() {
   });
 
   return (
-    <Paper radius='md' p='xl' withBorder className='form'>
+    <Paper radius='md' p='xl' withBorder className='form' style={{margin:"3rem auto"}}>
       <Text size='lg' weight={500}>
         Welcome to Mantine, {type} with
       </Text>

@@ -66,21 +66,7 @@ export default function Profile() {
                 </Table>
 
             </ScrollArea>
-            <Link to="/checkout" >
-                <div style={{ marginTop: "0.5rem", marginLeft: "66rem", marginRight: "auto", textDecoration: "none" }}>
-                    <Button
-
-                        radius="md"
-                        size="md"
-                        style={{ backgroundColor: "#BC9470" }}
-                        variant="gradient"
-                        border="md"
-                        gradient={{ from: "#bc9470", to: "beige" }}
-                    >
-                        Checkout
-                    </Button>
-                </div>
-            </Link>
+           
         </>
     );
 }
