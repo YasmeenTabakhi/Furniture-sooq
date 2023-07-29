@@ -168,7 +168,9 @@ export default function HeaderMegaMenu() {
     <Box>
       <Header height={60} px='md' style={{ alignItems: 'baseline' }}>
         <Group position='apart' sx={{ height: '100%' }}>
-          <Link to='/'>LOGO</Link>
+        <Link to="/">
+            <img src="logo.png" width={"150px"} alt="" />
+          </Link>
           <Group
             sx={{ height: '100%' }}
             spacing={0}

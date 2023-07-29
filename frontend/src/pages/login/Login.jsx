@@ -54,6 +54,7 @@ export default function AuthenticationForm() {
   };
 
   return (
+    <div style={{height:"65vh"}}>
     <Paper radius='md' p='xl' withBorder className='form' style={{margin:"5rem auto"}}>
       <Text size='lg' weight={500}>
         Welcome to Mantine, Log In with
@@ -107,5 +108,6 @@ export default function AuthenticationForm() {
         </Anchor>
       </form>
     </Paper>
+    </div>
   );
 }

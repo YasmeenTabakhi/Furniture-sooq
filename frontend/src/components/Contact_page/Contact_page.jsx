@@ -16,7 +16,7 @@ function Contact_page() {
         </div>
         <div className="btns">
           <button>Send Message</button>
-          <button style={{ backgroundColor: "white", color: "black" }}>
+          <button style={{ backgroundColor: "#f7fafe", color: "#f7fafe" }}>
             About me
           </button>
         </div>
@@ -45,16 +45,16 @@ function Contact_page() {
             <h3>Socials</h3>
             <p className="imgs">
               <a href="">
-                <img src="Facebook.svg" width="25px" />{" "}
+                <img src="Facebook.png" width="25px" />{" "}
               </a>
               <a href="">
-                <img src="Twitter.svg" width="25px" />{" "}
+                <img src="Twitter.png" width="25px" />{" "}
               </a>
               <a href="">
-                <img src="Instagram.svg" width="25px" />{" "}
+                <img src="Instagram.png" width="25px" />{" "}
               </a>
               <a href="">
-                <img src="LinkedIn.svg" width="25px" />{" "}
+                <img src="LinkedIn.png" width="25px" />{" "}
               </a>
             </p>
           </div>

@@ -4,10 +4,11 @@ import {
   IconBrandYoutube,
   IconBrandInstagram,
 } from '@tabler/icons-react';
+import { Link } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
   footer: {
-    marginTop: "10rem",
+    marginTop: `calc(${theme.spacing.md} )`,
     paddingTop: `calc(${theme.spacing.sm} )`,
     paddingBottom: `calc(${theme.spacing.sm} )`,
     borderTop: `${rem(1)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
@@ -77,7 +78,9 @@ export default function FooterCentered() {
   return (
     <div className={classes.footer}>
       <div className={classes.inner}>
-        <p>LOGO</p>
+      <Link to="/">
+            <img src="logo.png" width={"150px"} alt="" />
+          </Link>
 
         <Group className={classes.links}>{items}</Group>
 

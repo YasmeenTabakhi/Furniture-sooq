@@ -40,6 +40,7 @@ export default function ResetPassword() {
     const { classes } = useStyles();
 
     return (
+        <div style={{height:"70vh"}}>
         <Container size={460} my={30}>
             <Title className={classes.title} align="center">
                 Reset Password
@@ -53,5 +54,6 @@ export default function ResetPassword() {
                 </Group>
             </Paper>
         </Container>
+        </div>
     );
 }

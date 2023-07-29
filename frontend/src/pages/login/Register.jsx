@@ -60,6 +60,7 @@ export default function Register() {
     };
 
     return (
+        <div style={{height:"70vh"}}>
         <Paper radius='md' p='xl' withBorder className='form' style={{margin:"2rem auto"}}>
             <Text size='lg' weight={500}>
                 Welcome to Mantine, Register with
@@ -119,5 +120,6 @@ export default function Register() {
                 </Group>
             </form>
         </Paper>
+        </div>
     );
 }

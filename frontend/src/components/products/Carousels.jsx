@@ -4,7 +4,8 @@ const { createStyles, Paper, Text, Title, Button, useMantineTheme, rem, Containe
 
 const useStyles = createStyles((theme) => ({
   card: {
-    height: rem(500),
+    marginTop:"1rem",
+    height: rem(600),
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     display: 'flex',
@@ -65,9 +66,9 @@ function Card({ image, title, category }) {
           {title}
         </Title>
       </div>
-      <Button variant="white" className={classes.button}>
+      {/* <Button variant="white" className={classes.button}>
         Shop Now!
-      </Button>
+      </Button> */}
     </Paper>
   );
 }
@@ -75,27 +76,26 @@ function Card({ image, title, category }) {
 const data = [
   {
     key: '1',
-    image:"https://th.bing.com/th/id/OIP.3t_lgUnw-B0X0XmME77wpQHaE8?pid=ImgDet&w=1000&h=667&rs=1",
-    title: 'mega off',
-    category: 'nature',
-  },
+    image:"https://media.discordapp.net/attachments/1126046728156631072/1134929917709140068/blue-armchair-against-blue-wall-living-room-interior-elegant-interior-design-with-copy-space-ai-generative.jpg?width=993&height=662",
+    title: 'New Arrival',
+ },
   {
     key: '2',
-    image: 'https://th.bing.com/th/id/OIP.o4QoyrK640EwuFd1c6VHGQHaHa?pid=ImgDet&w=1200&h=1200&rs=1',
-    title: 'Huge Sale',
-    category: 'beach',
+    image: 'https://cdn.discordapp.com/attachments/1126046728156631072/1134935289492684840/Untitle222222-4.png',
+    title: 'New Arrival',
+
   },
   {
     key: '3',
-    image: 'https://i.pinimg.com/564x/09/9e/b6/099eb673d856602e5b2810ff97ccd95b.jpg',
-    title: 'mega off',
-    category: 'nature',
+    image: 'https://cdn.discordapp.com/attachments/1126046728156631072/1134934016898908261/dsadsa.png',
+    title: 'New Arrival',
+
   },
   {
     key: '4',
-    image: 'https://www.bltbangkok.com/wp-content/uploads/2023/03/unnamed.png',
-    title: 'Huge Sale',
-    category: 'nature',
+    image: 'https://cdn.discordapp.com/attachments/1126046728156631072/1134934519535915129/Untitled-4.png',
+    title: 'New Arrival',
+
   },
 ];
 

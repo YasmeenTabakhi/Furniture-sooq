@@ -40,6 +40,7 @@ export default function ForgotPassword() {
     const { classes } = useStyles();
 
     return (
+        <div style={{height:"70vh"}}>
         <Container size={460} my={30}>
             <Title className={classes.title} align="center">
                 Forgot your password?
@@ -61,5 +62,6 @@ export default function ForgotPassword() {
                 </Group>
             </Paper>
         </Container>
+        </div>
     );
 }

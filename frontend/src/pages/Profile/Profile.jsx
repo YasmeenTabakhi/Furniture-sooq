@@ -180,10 +180,5 @@ export default function Profile() {
                     </tbody>
                 </Table>
             </ScrollArea>
-<<<<<<< HEAD
-           
-=======
->>>>>>> 756bbf61d0ba7122988dc5e98425d342b0424e9f
-        </>
-    );
-}
+            </>
+)}

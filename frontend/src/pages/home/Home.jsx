@@ -7,7 +7,7 @@ function Home() {
   return (
     <>
       <Hero />
-      <Features />
+      {/* <Features /> */}
       {/* <CardsCarousel /> */}
     </>
   );
