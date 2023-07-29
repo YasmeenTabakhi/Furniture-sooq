@@ -28,7 +28,7 @@ app.use('/api/product', require('./routes/product'))
 app.use('/api/users', require('./routes/user'))
 app.use('/api/cart', require('./routes/cart'))
 app.use('/api/pastorder', require('./routes/pastorder'))
-app.use('/password', require('./routes/password'))
+// app.use('/password', require('./routes/password'))
 
 
 // Error Handler Middleware'

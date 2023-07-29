@@ -42,7 +42,7 @@ function App() {
         <Route path="/contact" element={<Contact_page />} />
         <Route path="/profile" element={<Profile />} />
 
-        <Route path="/user/:userld/verify/:token" element={<VerifyEmail />} />
+        <Route path="/users/:userld/verify/:token" element={<VerifyEmail />} />
 
 
 

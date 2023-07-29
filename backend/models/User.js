@@ -36,6 +36,10 @@ const UserSchema = new Schema({
     cart: {
         type: Array
     },
+    isAccountVerified: {
+        type: Boolean,
+        default: false,
+    },
 }
 
 )
