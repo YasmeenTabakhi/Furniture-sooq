@@ -1,12 +1,15 @@
 const express = require('express')
 const router = express.Router()
 const { verifyToken } = require('../middlewares/VerifyToken')
-const { getA11Products } = require('../controllers/productController')
+const { getA11Products, getProductsById, newQuantityProduct } = require('../controllers/productController')
 
 
-// route 
 router.route('/')
-    .get(verifyToken, getA11Products)
+    .get(getA11Products)
+
+router.route('/:id')
+    .get(getProductsById)
+    .put(verifyToken, newQuantityProduct)
 
 module.exports = router
 

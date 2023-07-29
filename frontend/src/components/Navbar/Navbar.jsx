@@ -1,16 +1,12 @@
 import {
   createStyles,
   Header,
-  HoverCard,
   Group,
   Button,
   UnstyledButton,
   Text,
-  SimpleGrid,
   ThemeIcon,
-  Anchor,
   Divider,
-  Center,
   Box,
   Burger,
   Drawer,
@@ -29,11 +25,13 @@ import {
   IconChartPie3,
   IconFingerprint,
   IconCoin,
-  IconChevronDown,
 } from '@tabler/icons-react';
 
 import { Link } from "react-router-dom";
 import { IconBasketFilled } from '@tabler/icons-react';
+import { useState, useEffect, useContext } from 'react';
+import { UserInfoContext } from '../../context/UserInfoProvider';
+
 
 const useStyles = createStyles((theme) => ({
   link: {
@@ -143,6 +141,10 @@ export default function HeaderMegaMenu() {
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
   const { classes, theme } = useStyles();
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+
+
+
 
   const links = mockdata.map((item) => (
     <UnstyledButton className={classes.subLink} key={item.title}>
@@ -164,7 +166,7 @@ export default function HeaderMegaMenu() {
 
   return (
     <Box>
-      <Header height={60} px='md'>
+      <Header height={60} px='md' style={{ alignItems: 'baseline' }}>
         <Group position='apart' sx={{ height: '100%' }}>
           <Link to='/'>LOGO</Link>
           <Group
@@ -176,78 +178,34 @@ export default function HeaderMegaMenu() {
               Home
             </Link>
 
-            {/* <HoverCard
-              width={600}
-              position='bottom'
-              radius='md'
-              shadow='md'
-              withinPortal
-            >
-              <HoverCard.Target>
-                <a href='#' className={classes.link}>
-                  <Center inline>
-                    <Box component='span' mr={5}>
-                      Features
-                    </Box>
-                    <IconChevronDown
-                      size={16}
-                      color={theme.fn.primaryColor()}
-                    />
-                  </Center>
-                </a>
-              </HoverCard.Target>
-
-              <HoverCard.Dropdown sx={{ overflow: 'hidden' }}>
-                <Group position='apart' px='md'>
-                  <Text fw={500}>Features</Text>
-                  <Anchor href='#' fz='xs'>
-                    View all
-                  </Anchor>
-                </Group>
-
-                <Divider
-                  my='sm'
-                  mx='-md'
-                  color={theme.colorScheme === 'dark' ? 'dark.5' : 'gray.1'}
-                />
-
-                <SimpleGrid cols={2} spacing={0}>
-                  {links}
-                </SimpleGrid>
-
-                <div className={classes.dropdownFooter}>
-                  <Group position='apart'>
-                    <div>
-                      <Text fw={500} fz='sm'>
-                        Get started
-                      </Text>
-                      <Text size='xs' color='dimmed'>
-                        Their food sources have decreased, and their numbers
-                      </Text>
-                    </div>
-                    <Button variant='default'>Get started</Button>
-                  </Group>
-                </div>
-              </HoverCard.Dropdown>
-
-            </HoverCard> */}
-
             <Link to='/products' className={classes.link}>
               Products
             </Link>
 
+
+
             <Link to='/contact' className={classes.link}>
               Contact Us
             </Link>
-
           </Group>
 
-          <Group position='center' grow pb='xl' px='md'>
-            <Link to='/cart' className={classes.link} ><IconBasketFilled /> </Link>
-            <UserMenu />
+          <Group position='center' grow className={classes.hiddenMobile}>
+            {userInfo && (
+              <>
+                <Link to='/cart' className={classes.link}><IconBasketFilled /><span>{userInfo?.cart?.length}</span> </Link>
+                <UserMenu userInfo={userInfo} />
+              </>
+            )
+            }
 
-            <Link to='/login'><Button variant='default'>Log in</Button></Link>
-            <Button>Sign up</Button>
+
+
+            {!userInfo && (
+              <>
+                <Link to='/login'><Button variant='default'>Log in</Button></Link>
+                <Link to='/register'> <Button px='md' style={{ width: '90px' }}>Sign up</Button> </Link>
+              </>
+            )}
           </Group>
 
           <Burger
@@ -295,10 +253,10 @@ export default function HeaderMegaMenu() {
 
           <Group position='center' grow pb='xl' px='md'>
             <Link to='/login'><Button variant='default'>Log in</Button></Link>
-            <Button>Sign up</Button>
+            <Link to='/register'><Button>Sign up</Button></Link>
           </Group>
         </ScrollArea>
       </Drawer>
-    </Box>
+    </Box >
   );
 }

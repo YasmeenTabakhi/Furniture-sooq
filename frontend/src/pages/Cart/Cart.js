@@ -1,11 +1,14 @@
 import React from "react";
 import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 import { CartTotal } from "../../components/CartTotal/CartTotal";
+import { UserInfoContext } from '../../context/UserInfoProvider';
 
-function Cart() {
+function Cart({ userInfo }) {
+  console.log(userInfo)
+
   return (
     <div className="container">
-      <ShoppingCart />
+      <ShoppingCart userInfo={userInfo} />
       {/* <CartTotal /> */}
     </div>
   );

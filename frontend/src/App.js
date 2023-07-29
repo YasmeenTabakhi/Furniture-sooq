@@ -5,11 +5,13 @@ import HeaderMegaMenu from './components/Navbar/Navbar'
 import Footer from './components/Footer/Footer'
 import Home from './pages/home/Home'
 import Login from './pages/login/Login'
+import Register from './pages/login/Register'
 import Products from './pages/Products/Products'
 import Single from './pages/Products/Single'
 import Progress from './components/Stepper/Stepper'
 import Contact_page from './components/Contact_page/Contact_page'
 import Profile from './pages/Profile/Profile'
+
 
 
 //Admin route
@@ -28,12 +30,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/products" element={<Products />} />
         <Route path="/singleProduct/:productId" element={<Single />} />
         <Route path="/cart" element={<Progress />} />
         <Route path="/contact" element={<Contact_page />} />
         <Route path="/profile" element={<Profile />} />
-
 
 
         {/* 
@@ -44,7 +46,6 @@ function App() {
         <Route path="/orders_dashbord" element={<DashOrders />} />
         <Route path="/setting" element={<Addproduct />} />
          */}
-
 
       </Routes>
       <Footer />

@@ -10,59 +10,35 @@ import {
 import { IconTrash } from "@tabler/icons-react";
 import { QuantityInput } from "../Quantity/Quantity";
 
-const data = {
-  data: [
-    {
-      image: "https://th.bing.com/th/id/OIP.xhnvEObwHYLOpJdwH5iIaAAAAA?pid=ImgDet&rs=1",
-      item: "iPhone 14",
-      price: "$800.00",
-      quantity: "1",
-      id:1,
-    },
-    {
-      image: "https://th.bing.com/th/id/OIP.xhnvEObwHYLOpJdwH5iIaAAAAA?pid=ImgDet&rs=1",
-      item: "iPhone 14",
-      price: "$800.00",
-      quantity: "1",
-      id:2,
-    },
-    {
-      image: "https://th.bing.com/th/id/OIP.xhnvEObwHYLOpJdwH5iIaAAAAA?pid=ImgDet&rs=1",
-      item: "iPhone 14",
-      price: "$800.00",
-      quantity: "1",
-      id:3,
-    },
-  ],
-};
-export default function ShoppingCart() {
-  const rows = data.data.map((item) => (
-    <tr key={item.id}>
+
+
+export default function ShoppingCart({ userInfo }) {
+
+
+  const rows = userInfo.cart.map((item, index) => (
+    <tr key={index + 1}>
       <td>
         <Group spacing="sm">
-          <Avatar size={100} src={item.image} radius={15} />
-          <Text fz="lg" fw={500} className="product-title">
-            {item.item}
-          </Text>
+          <Avatar size={100} src={item.productImage.url} radius={15} />
         </Group>
       </td>
       <td>
-        <Anchor component="button" size="sm">
-          {item.price}
+        <Anchor component="button" size="xl" style={{ color: 'black', textDecoration: 'none' }}>
+          {item.title}
         </Anchor>
       </td>
       <td>
         <Text>
-          <QuantityInput />
+          <QuantityInput quantity={item.quantity} />
         </Text>
       </td>
       <td>
         <Anchor component="button" size="sm">
-          {item.price}
+          $ {item.price * item.quantity}
         </Anchor>
       </td>
       <td>
-        <Group spacing={0} position="right">
+        <Group spacing={0} position="left">
           <ActionIcon color="red">
             <IconTrash size="1rem" stroke={1.5} />
           </ActionIcon>
@@ -76,9 +52,9 @@ export default function ShoppingCart() {
         <thead>
           <tr>
             <th>Product</th>
+            <th>Title</th>
+            <th> Quantity</th>
             <th>Price</th>
-            <th>Quantity</th>
-            <th>SubTotal</th>
             <th />
           </tr>
         </thead>

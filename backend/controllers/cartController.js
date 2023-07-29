@@ -43,7 +43,6 @@ module.exports.addCartCtrl = asyncHandler(async (req, res) => {
         if (findID) {
             res.status(404).json({ message: "It has already been added. You can increase the amount of the cart" })
         } else {
-            cartProduct.quantity -= 1
 
             const obj = {
                 id: cartProduct.id,
@@ -51,16 +50,16 @@ module.exports.addCartCtrl = asyncHandler(async (req, res) => {
                 description: cartProduct.description,
                 price: cartProduct.price,
                 productImage: {
-                    url: cartProduct.profilePhoto,
+                    url: cartProduct.profilePhoto.url,
                     publicId: null
                 },
-                quantity: 1
+                quantity: req.body.count
             }
 
             user.cart.push(obj)
             await cartProduct.save()
             await user.save()
-            res.status(200).json(user)
+            res.status(200).json({ message: 'The request has been added', user })
         }
     }
 })

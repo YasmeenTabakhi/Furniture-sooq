@@ -9,15 +9,14 @@ const useStyles = createStyles((theme) => ({
     justifyContent: "space-between",
     padding: `${theme.spacing.md}`,
     borderRadius: theme.radius.sm,
-  
+
   },
 
   control: {
     backgroundColor:
       theme.colorScheme === "dark" ? theme.colors.dark[7] : theme.white,
-    border: `${rem(1)} solid ${
-      theme.colorScheme === "dark" ? "transparent" : theme.colors.gray[3]
-    }`,
+    border: `${rem(1)} solid ${theme.colorScheme === "dark" ? "transparent" : theme.colors.gray[3]
+      }`,
 
     "&:disabled": {
       borderColor:
@@ -33,13 +32,13 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function QuantityInput({ min = 1, max = 10 }) {
+export function QuantityInput({ min = 1, max = 10, quantity }) {
   const { classes } = useStyles();
   const handlers = useRef(null);
-  const [value, setValue] = useState(1);
+  const [value, setValue] = useState(quantity);
 
   return (
-    <div className={classes.wrapper} style={{width:"8rem"}}>
+    <div className={classes.wrapper} style={{ width: "8rem", padding: 0 }}>
       <ActionIcon
         component="button"
         size={28}
@@ -56,7 +55,7 @@ export function QuantityInput({ min = 1, max = 10 }) {
         min={min}
         max={max}
         handlersRef={handlers}
-        value={value}
+        value={quantity}
         onChange={setValue}
         classNames={{ input: classes.input }}
       />
