@@ -7,7 +7,7 @@ router.post('/register', register)
 
 router.post('/login', login)
 
-// router.get("/:userId/verify/:token", verifyUserAccountCtrl);
+router.get('/:userId/verify/:token', verifyUserAccountCtrl);
 
 
 

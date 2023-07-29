@@ -49,10 +49,7 @@ module.exports.addCartCtrl = asyncHandler(async (req, res) => {
                 title: cartProduct.title,
                 description: cartProduct.description,
                 price: cartProduct.price,
-                productImage: {
-                    url: cartProduct.profilePhoto.url,
-                    publicId: null
-                },
+                image: cartProduct.image,
                 quantity: req.body.count
             }
 

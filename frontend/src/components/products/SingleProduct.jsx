@@ -72,7 +72,7 @@ export function SingleProduct() {
             <Grid className={classes.showSingle}>
 
                 <Grid.Col md={6} lg={5}>
-                    <Image mx="auto" src={product?.profilePhoto?.url} alt={product.title} style={{ objectFit: 'contain', width: '300px', height: '400px' }} />
+                    <Image mx="auto" src={product?.image} alt={product.title} style={{ objectFit: 'contain', width: '300px', height: '400px' }} />
                 </Grid.Col>
 
                 <Grid.Col md={6} lg={7}>

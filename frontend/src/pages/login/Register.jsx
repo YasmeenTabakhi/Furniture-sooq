@@ -52,7 +52,7 @@ export default function Register() {
                     email,
                     password,
                 });
-                navigate('/login');
+                navigate('/verifyEmail');
             } catch (error) {
                 console.error('Authentication error:', error.response?.data?.message || 'Unknown error occurred');
             }
@@ -60,7 +60,7 @@ export default function Register() {
     };
 
     return (
-        <Paper radius='md' p='xl' withBorder className='form' style={{margin:"2rem auto"}}>
+        <Paper radius='md' p='xl' withBorder className='form' style={{ margin: "2rem auto" }}>
             <Text size='lg' weight={500}>
                 Welcome to Mantine, Register with
             </Text>
