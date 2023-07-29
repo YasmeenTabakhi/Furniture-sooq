@@ -36,6 +36,10 @@ const UserSchema = new Schema({
     cart: {
         type: Array
     },
+    isAccountVerified: {
+        type: Boolean,
+        default: false,
+    },
 }
 
 )
@@ -69,4 +73,22 @@ function ValidateLoginUser(obj) {
     return Schema.validate(obj)
 }
 
-module.exports = { User, ValidateRegisterUser, ValidateLoginUser }
+
+// Validate Email
+function validateEmail(obj) {
+    const schema = Joi.object({
+        email: Joi.string().trim().min(5).max(100).required().email(),
+    });
+    return schema.validate(obj);
+}
+
+// Validate New Password
+function validateNewPassword(obj) {
+    const schema = Joi.object({
+        password: Joi.required(),
+    });
+    return schema.validate(obj);
+}
+
+
+module.exports = { User, ValidateRegisterUser, ValidateLoginUser, validateEmail, validateNewPassword }

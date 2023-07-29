@@ -197,18 +197,17 @@ export function AllProducts({ selectedOption, search, show }) {
                     <Grid.Col >
                         <Card withBorder radius="md" className={classes.card} >
                             <Card.Section className={classes.imageSection}>
-                                <Link to={`/singleProduct/${item._id}`}><Image src={item.profilePhoto.url} alt="Tesla Model S" height='200' style={{ width: '100%' }} /></Link>
+                                <Link to={`/singleProduct/${item._id}`}><Image src={item.image} alt="Tesla Model S" height='200' style={{ width: '100%' }} /></Link>
                             </Card.Section>
 
-                            <Group position="apart" mt="md">
+                            <Group position="apart" mt="md" style={{ height: '120px', paddingBottom: '10px' }}>
                                 <div>
                                     <Text fw={500}>{item.title}</Text>
                                     <Text fz="xs" c="dimmed">
                                         {item.description}
                                     </Text>
                                 </div>
-                                {/* <Badge variant="outline">25% off</Badge> */}
-                                <Badge variant="outline">Quantity {item.quantity}</Badge>
+                                <Badge variant="outline" >Quantity {item.quantity}</Badge>
                             </Group>
 
                             <Card.Section className={classes.section}>

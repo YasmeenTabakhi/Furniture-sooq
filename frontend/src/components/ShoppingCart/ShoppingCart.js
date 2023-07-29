@@ -135,7 +135,7 @@ export default function ShoppingCart({ userInfo, setUserInfo }) {
     <tr key={index + 1}>
       <td>
         <Group spacing="sm">
-          <Avatar size={100} src={item.productImage.url} radius={15} />
+          <Avatar size={100} src={item.image} radius={15} />
         </Group>
       </td>
       <td>

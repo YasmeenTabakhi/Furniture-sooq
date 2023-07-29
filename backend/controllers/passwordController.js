@@ -1,21 +1,21 @@
 const asyncHandler = require("express-async-handler");
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcrypt')
 const {
     User,
     validateEmail,
     validateNewPassword
 } = require("../models/User");
-const VerificationToken = require("../models/VerificationToken.js");
+const VerificationToken = require("../models/VerificationToken");
 const crypto = require("crypto");
 const sendEmail = require("../utils/sendEmail");
 
 
-/**-----------------------------------------------
+/* 
  * @desc    Send Reset Password Link
  * @route   /api/password/reset-password-link
  * @method  POST
  * @access  public
- ------------------------------------------------*/
+*/
 module.exports.sendResetPasswordLinkCtrl = asyncHandler(async (req, res) => {
     // 1. Validation
     const { error } = validateEmail(req.body);
@@ -40,7 +40,8 @@ module.exports.sendResetPasswordLinkCtrl = asyncHandler(async (req, res) => {
     }
 
     // 4. Creating link
-    const link = `${process.env.CLIENT_DOMAIN}/reset-password/${user._id}/${verificationToken.token}`;
+    const link = `${process.env.CLIENT_DOMAIN}resetPassword/${user._id}/${verificationToken.token}`;
+
     // 5. Creating HMTL template
     const htmlTemplate = `<a href="${link}">Click here to reset your password</a>`;
     // 6. Sending Email
@@ -51,12 +52,12 @@ module.exports.sendResetPasswordLinkCtrl = asyncHandler(async (req, res) => {
     })
 });
 
-/**-----------------------------------------------
+/** 
  * @desc    Get Reset Password Link
  * @route   /api/password/reset-password/:userId/:token
  * @method  GET
  * @access  public
- ------------------------------------------------*/
+*/
 module.exports.getResetPasswordLinkCtrl = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.userId);
     if (!user) {
@@ -74,12 +75,12 @@ module.exports.getResetPasswordLinkCtrl = asyncHandler(async (req, res) => {
     res.status(200).json({ message: "Valid url" });
 });
 
-/**-----------------------------------------------
+/** 
  * @desc    Reset Password
  * @route   /api/password/reset-password/:userId/:token
  * @method  POST
  * @access  public
- ------------------------------------------------*/
+*/
 module.exports.resetPasswordCtrl = asyncHandler(async (req, res) => {
     const { error } = validateNewPassword(req.body);
     if (error) {
@@ -108,7 +109,7 @@ module.exports.resetPasswordCtrl = asyncHandler(async (req, res) => {
 
     user.password = hashedPassword;
     await user.save();
-    await verificationToken.remove();
+    await VerificationToken.findOneAndDelete({ userId: user._id, });
 
     res.status(200).json({ message: "Password reset successfully, please log in" });
 });

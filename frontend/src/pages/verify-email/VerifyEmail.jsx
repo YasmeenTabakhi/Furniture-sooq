@@ -1,31 +1,103 @@
-import { useState } from "react";
-import "./verify-email.css";
-import { Link, useParams } from "react-router-dom";
+import { createStyles, Title, Text, Button, Container, Group, rem } from '@mantine/core';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify'
+import { useParams } from 'react-router-dom'
 
-const VerifyEmail = () => {
-  const [isEmailVerified, setisEmailVerified] = useState(true)
-  const { userId, token } = useParams();
+
+const useStyles = createStyles((theme) => ({
+  root: {
+    paddingTop: rem(170),
+    backgroundColor: 'white'
+  },
+
+
+
+  title: {
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    textAlign: 'center',
+    fontWeight: 900,
+    fontSize: rem(38),
+    color: theme.black,
+
+    [theme.fn.smallerThan('sm')]: {
+      fontSize: rem(32),
+    },
+  },
+
+  description: {
+    maxWidth: rem(540),
+    margin: 'auto',
+    marginTop: theme.spacing.xl,
+    marginBottom: `calc(${theme.spacing.xl} * 1.5)`,
+    color: theme.black,
+  },
+}));
+
+export default function VerifyEmail() {
+  const { classes } = useStyles();
+  let { userId } = useParams()
+  let { token } = useParams()
+  let navigate = useNavigate()
+
+  // Confirm Email
+  const fetchConfirmEmail = async (productID) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/api/auth/${userId}/${token}`)
+
+      toast.success(response.data.message, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+      navigate('/login')
+    } catch (error) {
+      toast.error(error.response.data.message, {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+      });
+    }
+  };
+
+
 
 
   return (
-    <section className="verfiy-email">
-      {isEmailVerified ? (
-        <>
-          <i className="bi bi-patch-check verify-email-icon"></i>
-          <h1 className="verfiy-email-title">
-            Your email address has been successfully verified
-          </h1>
-          <Link to="/login" className="verify-email-link">
-            Go To Login Page
-          </Link>
-        </>
-      ) : (
-        <>
-          <h1 className="verify-email-not-found">Not Found</h1>
-        </>
-      )}
-    </section>
+    <div className={classes.root}>
+      <Container>
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
+        <Title className={classes.title}>Confirm Email</Title>
+        <Text size="lg" align="center" className={classes.description}>
+          Let's go great browsing press confirm
+        </Text>
+        <Group position="center">
+          <Button variant="white" size="md" style={{ backgroundColor: '#228be6', color: 'white' }} onClick={() => fetchConfirmEmail()}>
+            Confirm
+          </Button>
+        </Group>
+      </Container>
+    </div>
   );
-};
-
-export default VerifyEmail;
+}

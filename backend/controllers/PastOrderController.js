@@ -25,7 +25,7 @@ module.exports.addPastOrederCtrl = asyncHandler(async (req, res) => {
                     description: pastOrder[i].description,
                     price: pastOrder[i].price,
                     user: req.user.id,
-                    image: user.profilePhoto.url,
+                    image: pastOrder[i].image,
                     quantity: pastOrder[i].quantity,
                 },
             )

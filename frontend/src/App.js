@@ -15,7 +15,7 @@ import Contact_page from './components/Contact_page/Contact_page'
 import Profile from './pages/Profile/Profile'
 import NotFound from './components/NotFound/NotFound'
 import VerifyEmail from './pages/verify-email/VerifyEmail'
-
+import NothingFoundBackground from './pages/verify-email/PleaseConfirm'
 
 //Admin route
 import AuthenticationForm from './pages/Admin/Login'
@@ -35,14 +35,17 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/ForgottPassword" element={<ForgotPassword />} />
-        <Route path="/resetPassword" element={<ResetPassword />} />
+        <Route path="/resetPassword/:userId/:token" element={<ResetPassword />} />
         <Route path="/products" element={<Products />} />
         <Route path="/singleProduct/:productId" element={<Single />} />
         <Route path="/cart" element={<Progress />} />
         <Route path="/contact" element={<Contact_page />} />
         <Route path="/profile" element={<Profile />} />
 
-        <Route path="/user/:userld/verify/:token" element={<VerifyEmail />} />
+        <Route path="/users/:userId/verify/:token" element={<VerifyEmail />} />
+        <Route path="/verifyEmail" element={<NothingFoundBackground />} />
+
+
 
 
 
