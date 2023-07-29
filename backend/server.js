@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const { errorHandler, notFound } = require('./middlewares/error.js')
 const app = express();
 require('dotenv').config();
 
@@ -21,15 +22,18 @@ mongoose
     console.log(err);
   });
 
-
-
-
+//routes 
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/product', require('./routes/product'))
 app.use('/api/users', require('./routes/user'))
 app.use('/api/cart', require('./routes/cart'))
 app.use('/api/pastorder', require('./routes/pastorder'))
+app.use('/password', require('./routes/password'))
 
+
+// Error Handler Middleware'
+app.use(notFound)
+app.use(errorHandler)
 
 
 app.listen(process.env.PORT, () => {

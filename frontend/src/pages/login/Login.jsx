@@ -102,6 +102,9 @@ export default function AuthenticationForm() {
             Log In
           </Button>
         </Group>
+        <Anchor component='button' type='button' color='dimmed' size='xs' style={{ display: 'block' }}>
+          <Link to='/ForgottPassword'>Forgot your password?</Link>
+        </Anchor>
       </form>
     </Paper>
   );

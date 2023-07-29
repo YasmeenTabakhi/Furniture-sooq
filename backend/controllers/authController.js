@@ -1,8 +1,9 @@
 const asyncHandler = require('express-async-handler')
 const { User, ValidateRegisterUser, ValidateLoginUser } = require('../models/User')
 const bcrypt = require('bcrypt')
-
-
+const VerificationToken = require("../models/VerificationToken");
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 
 /**
  * 
@@ -70,6 +71,35 @@ const login = asyncHandler(async (req, res) => {
     res.status(201).json({ ...other, token })
 })
 
+
+/**-----------------------------------------------
+ * @desc    Verify User Account
+ * @route   /api/auth/:userId/verify/:token
+ * @method  GET
+ * @access  public
+-------------------------------------------------*/
+module.exports.verifyUserAccountCtrl = asyncHandler(async (req, res) => {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+        return res.status(400).json({ message: "invalid link" });
+    }
+
+    const verificationToken = await VerificationToken.findOne({
+        userId: user._id,
+        token: req.params.token,
+    });
+
+    if (!verificationToken) {
+        return res.status(400).json({ message: "invalid link" });
+    }
+
+    user.isAccountVerified = true;
+    await user.save();
+
+    await verificationToken.remove();
+
+    res.status(200).json({ message: "Your account verified" });
+});
 
 
 module.exports = { register, login }

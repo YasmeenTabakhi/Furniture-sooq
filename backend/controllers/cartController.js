@@ -73,11 +73,13 @@ module.exports.addCartCtrl = asyncHandler(async (req, res) => {
 ---------------------------------------------------------------*/
 module.exports.deleteProductCart = asyncHandler(async (req, res) => {
     const cartProduct = await Product.findById(req.params.id)
+    const count = req.body.count;
+
     if (!cartProduct) {
         res.status(404).json({ message: "Not found" })
     }
 
-    cartProduct.quantity += 1;
+    cartProduct.quantity += count;
 
     const decoded = jwt.verify(req.headers.token, process.env.JWT_SECRET_KEY)
     const user = await User.findById(decoded.id)
@@ -90,3 +92,37 @@ module.exports.deleteProductCart = asyncHandler(async (req, res) => {
     res.status(200).json(user)
 })
 
+
+
+// Just to take advantage
+/**-------------------------------------------------------------
+ * @desc    Add Product Quantity
+ * @route   /api/cart/:id
+ * @method  POST
+ * @access  private ( only logged in user )
+---------------------------------------------------------------*/
+module.exports.newQuantityProductMany = asyncHandler(async (req, res) => {
+    const { products } = req.body;
+
+    const results = [];
+
+    for (const productData of products) {
+        const { id, count } = productData;
+
+        const product = await Product.findById(id);
+        if (!product) {
+            results.push({ id, success: false, message: 'not found' });
+            continue;
+        }
+
+        if (product.quantity >= count) {
+            product.quantity -= count;
+            await product.save();
+            results.push({ id, success: true, message: 'The request has been added', product });
+        } else {
+            results.push({ id, success: false, message: 'The required quantity is greater than the available quantity. Please request the available quantity.' });
+        }
+    }
+
+    res.json({ results });
+});

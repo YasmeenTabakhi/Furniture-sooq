@@ -16,6 +16,8 @@ module.exports.getA11Products = asyncHandler(async (req, res) => {
     res.status(200).json(product)
 })
 
+
+
 /**
 * 
 *  @desc Get Product By Id
@@ -28,6 +30,8 @@ module.exports.getProductsById = asyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id)
     res.status(200).json(product)
 })
+
+
 
 /**
 * 
@@ -50,7 +54,6 @@ module.exports.newQuantityProduct = asyncHandler(async (req, res) => {
         product.quantity -= count;
     } else {
         return res.status(400).json({ message: 'The required quantity is greater than the available quantity. Please request the available quantity.' });
-
     }
 
     await product.save()

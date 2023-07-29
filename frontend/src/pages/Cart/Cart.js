@@ -3,13 +3,11 @@ import ShoppingCart from "../../components/ShoppingCart/ShoppingCart";
 import { CartTotal } from "../../components/CartTotal/CartTotal";
 import { UserInfoContext } from '../../context/UserInfoProvider';
 
-function Cart({ userInfo }) {
-  console.log(userInfo)
+function Cart({ userInfo, setUserInfo }) {
 
   return (
     <div className="container">
-      <ShoppingCart userInfo={userInfo} />
-      {/* <CartTotal /> */}
+      <ShoppingCart userInfo={userInfo} setUserInfo={setUserInfo} />
     </div>
   );
 }

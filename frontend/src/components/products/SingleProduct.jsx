@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState, useContext } from 'react';
 import axios from 'axios'
 import { UserInfoContext } from '../../context/UserInfoProvider';
+import { useNavigate } from 'react-router-dom';
 
 const useStyles = createStyles((theme) => ({
     showSingle: {
@@ -42,6 +43,7 @@ const useStyles = createStyles((theme) => ({
 
 export function SingleProduct() {
     let { productId } = useParams()
+    let navigate = useNavigate()
     const [product, setProduct] = useState({})
     const { userInfo, setUserInfo } = useContext(UserInfoContext);
 
@@ -51,6 +53,10 @@ export function SingleProduct() {
                 const response = await axios.get(`http://localhost:8000/api/product/${productId}`);
                 setProduct(response.data);
             } catch (error) {
+                if (error.response.status === 400) {
+                    navigate('*')
+                }
+
                 console.error('Error fetching data:', error);
             }
         };
