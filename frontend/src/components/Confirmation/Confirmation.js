@@ -6,10 +6,10 @@ const useStyles = createStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: `calc(${theme.spacing.xl} * 2)`,
-    margin:"5rem",
+    margin: "5rem",
     borderRadius: theme.radius.md,
     backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.white,
-    
+
 
     [theme.fn.smallerThan('sm')]: {
       flexDirection: 'column-reverse',
@@ -68,9 +68,9 @@ export function Confirmation() {
     <div className={classes.wrapper}>
       <div className={classes.body}>
         <Title className={classes.title}> Thank you for your purchase!</Title>
-       
+
         <Text fz="sm" c="dimmed">
-        We truly appreciate your business and hope you enjoy your new products. If you have any questions or need assistance, please don't hesitate to contact our customer support team. Happy shopping!
+          We truly appreciate your business and hope you enjoy your new products. If you have any questions or need assistance, please don't hesitate to contact our customer support team. Happy shopping!
         </Text>
 
       </div>

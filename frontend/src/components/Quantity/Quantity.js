@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { createStyles, NumberInput, ActionIcon, rem } from "@mantine/core";
 import { IconPlus, IconMinus } from "@tabler/icons-react";
 
@@ -32,7 +32,7 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-export function QuantityInput({ min = 1, max = 10, quantity }) {
+export function QuantityInput({ min = 1, max = 10, quantity, onIncrease, onDecrease }) {
   const { classes } = useStyles();
   const handlers = useRef(null);
   const [value, setValue] = useState(quantity);
@@ -43,10 +43,15 @@ export function QuantityInput({ min = 1, max = 10, quantity }) {
         component="button"
         size={28}
         variant="transparent"
-        onClick={() => handlers.current?.decrement()}
-        disabled={value === min}
+        onClick={() => {
+          if (quantity > min) {
+            onDecrease();
+          }
+        }}
+        disabled={quantity === min}
         className={classes.control}
-        onMouseDown={(event) => event.preventDefault()}>
+        onMouseDown={(event) => event.preventDefault()}
+      >
         <IconMinus stroke={1.5} />
       </ActionIcon>
 
@@ -54,9 +59,15 @@ export function QuantityInput({ min = 1, max = 10, quantity }) {
         variant="unstyled"
         min={min}
         max={max}
-        handlersRef={handlers}
         value={quantity}
-        onChange={setValue}
+        onChange={(newValue) => {
+          // يُمكنك إضافة التحقق من القيمة هنا
+          // إذا لم تكن رقمًا صحيحًا فيما بين الحد الأدنى والحد الأقصى
+          // فإننا لا نقوم بتحديث القيمة
+          if (newValue >= min && newValue <= max) {
+            setValue(newValue);
+          }
+        }}
         classNames={{ input: classes.input }}
       />
 
@@ -64,12 +75,23 @@ export function QuantityInput({ min = 1, max = 10, quantity }) {
         component="button"
         size={28}
         variant="transparent"
-        onClick={() => handlers.current?.increment()}
-        disabled={value === max}
+        onClick={() => {
+          if (quantity < max) {
+            onIncrease();
+          }
+        }}
+        disabled={quantity === max}
         className={classes.control}
-        onMouseDown={(event) => event.preventDefault()}>
+        onMouseDown={(event) => event.preventDefault()}
+      >
         <IconPlus size="1rem" stroke={1.5} />
       </ActionIcon>
     </div>
   );
 }
+
+
+
+
+
+

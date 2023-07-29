@@ -6,81 +6,180 @@ import {
     ActionIcon,
     Anchor,
     ScrollArea,
-    Button,
-    Portal,
-    Paper,
-    CloseButton,
 } from "@mantine/core";
 import { IconTrash } from "@tabler/icons-react";
 import { Link } from "react-router-dom";
 import './profile.css'
+import { useState, useEffect, useContext } from "react";
+import axios from 'axios'
+import { toast, ToastContainer } from 'react-toastify'
+import { UserInfoContext } from '../../context/UserInfoProvider';
 
 
 export default function Profile() {
+    const [product, setProduct] = useState([])
+    const { userInfo, setUserInfo } = useContext(UserInfoContext);
+
+    // Get All Post Order in Profile
+    useEffect(() => {
+        const token = JSON.parse(localStorage.getItem('userInfo')).token;
+
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/api/pastorder/`, {
+                    headers: {
+                        token: token,
+                    },
+                });
+
+                setProduct(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+
+    // Fetch  Delete Orders
+    const fetchRemoveOrder = async (productID) => {
+        try {
+            const token = JSON.parse(localStorage.getItem('userInfo')).token;
+
+            // delete Product in Profile
+            const response = await axios.delete(`http://localhost:8000/api/pastorder/${productID}`, {
+                headers: {
+                    token: token,
+                }
+            });
+
+            const responseProduct = await axios.get(`http://localhost:8000/api/pastorder/`, {
+                headers: {
+                    token: token,
+                },
+            });
+            setProduct(responseProduct.data);
+
+
+
+            toast.success('Deleted successfully', {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        } catch (error) {
+            toast.error(error.response.data.message, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    };
+
+
+    //Remove Order
+    const removeorder = (productID) => {
+        if (userInfo) {
+            fetchRemoveOrder(productID)
+        } else {
+            toast.error('👮 You must be logged in!', {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    }
+
+    const pastOrders = product.map((item, index) => {
+        return (
+            <tr key={index + 1}  >
+                <td>
+                    <Group spacing="sm">
+                        <Avatar size={100} src={item.image} radius={15} />
+                        <Text fz="sm" fw={500}>
+                            image
+                        </Text>
+                    </Group>
+                </td>
+
+                <td>
+                    <Anchor component="button" size="sm">
+                        {item.title}
+                    </Anchor>
+                </td>
+                <td>
+                    <Text fz="sm" c="dimmed">
+                        {" "}
+                        {item.quantity}
+                    </Text>
+                </td>
+                <td>
+                    <Text fz="sm" c="dimmed">
+                        {" "}
+                        {item.price}
+                    </Text>
+                </td>
+                <td>
+                    <Group spacing={0} position="right">
+                        <ActionIcon color="red">
+                            <IconTrash
+                                size="1rem"
+                                stroke={1.5}
+                                onClick={() => removeorder(item._id)}
+                            />
+                        </ActionIcon>
+                    </Group>
+                </td>
+            </tr>
+        )
+    })
     return (
         <>
-            <ScrollArea className="card" style={{ height: "100vh" }}>
+            <ScrollArea className="card" style={{ marginTop: "50px", marginBottom: '50px' }}>
+                <ToastContainer
+                    position="bottom-left"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                />
                 <h1>Past Order</h1>
-                <Table sx={{ minWidth: 800 }} verticalSpacing="sm">
+                <Table sx={{ minWidth: 800 }} verticalSpacing="sm" >
                     <thead>
                         <tr>
-                            <th>Item</th>
-                            <th>Price</th>
+                            <th>Product</th>
+                            <th>Title</th>
                             <th>Quantity</th>
-
+                            <th>Price</th>
                             <th />
                         </tr>
                     </thead>
-                    <tr>
-                        <td>
-                            <Group spacing="sm">
-                                <Avatar size={100} src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSg-3382ZgdUhzsOz0VYE8KVNtX_HTwTxRSps08Nli1&s' radius={15} />
-                                <Text fz="sm" fw={500}>
-                                    1
-                                </Text>
-                            </Group>
-                        </td>
-
-                        <td>
-                            <Anchor component="button" size="sm">
-                                $200
-                            </Anchor>
-                        </td>
-                        <td>
-                            <Text fz="sm" c="dimmed">
-                                {" "}
-                                12
-                            </Text>
-                        </td>
-                        <td>
-                            <Group spacing={0} position="right">
-                                <ActionIcon color="red">
-                                    <IconTrash
-                                        size="1rem"
-                                        stroke={1.5}
-                                    />
-                                </ActionIcon>
-                            </Group>
-                        </td>
-                    </tr>
+                    <tbody>
+                        {pastOrders}
+                    </tbody>
                 </Table>
-
             </ScrollArea>
-            <Link to="/checkout" >
-                <div style={{ marginTop: "0.5rem", marginLeft: "66rem", marginRight: "auto", textDecoration: "none" }}>
-                    <Button
-
-                        radius="md"
-                        size="md"
-                        style={{ backgroundColor: "#BC9470" }}
-                        variant="gradient"
-                        border="md"
-                        gradient={{ from: "#bc9470", to: "beige" }}
-                    >
-                        Checkout
-                    </Button>
-                </div>
-            </Link>
         </>
     );
 }
