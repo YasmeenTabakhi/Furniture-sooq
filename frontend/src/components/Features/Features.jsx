@@ -6,7 +6,7 @@ const useStyles = createStyles((theme) => ({
     position: 'relative',
     paddingTop: theme.spacing.xl,
     marginTop: theme.spacing.lg,
-    marginBottom: "8rem",
+    marginBottom: "2rem",
     paddingLeft: theme.spacing.xl,
   },
 

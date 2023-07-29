@@ -60,7 +60,7 @@ export default function Register() {
     };
 
     return (
-        <Paper radius='md' p='xl' withBorder className='form'>
+        <Paper radius='md' p='xl' withBorder className='form' style={{margin:"2rem auto"}}>
             <Text size='lg' weight={500}>
                 Welcome to Mantine, Register with
             </Text>

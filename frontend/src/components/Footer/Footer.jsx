@@ -28,7 +28,7 @@ const useStyles = createStyles((theme) => ({
     [theme.fn.smallerThan('sm')]: {
       marginTop: theme.spacing.lg,
       marginBottom: theme.spacing.md,
-      paddingTop: rem(3),
+      paddingTop: rem(1),
       paddingBottom: rem(3),
     },
   },

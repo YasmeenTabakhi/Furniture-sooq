@@ -54,7 +54,7 @@ export default function AuthenticationForm() {
   };
 
   return (
-    <Paper radius='md' p='xl' withBorder className='form' style={{margin:"3rem auto"}}>
+    <Paper radius='md' p='xl' withBorder className='form' style={{margin:"5rem auto"}}>
       <Text size='lg' weight={500}>
         Welcome to Mantine, Log In with
       </Text>
