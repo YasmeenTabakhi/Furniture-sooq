@@ -6,19 +6,24 @@ import {
     ActionIcon,
 } from '@mantine/core';
 import {
-    Navigate,
-    json,
-    Link,
-    useNavigate,
+    Link, useNavigate,
 } from 'react-router-dom';
 import {
     IconLogout,
     IconChevronRight,
 } from '@tabler/icons-react';
 import { IconSettings } from '@tabler/icons-react';
-import { useState, useEffect } from 'react';
-
+import { UserInfoContext } from '../../context/UserInfoProvider';
+import { useContext } from 'react'
 export default function UserMenu() {
+    const { userInfo, setUserInfo } = useContext(UserInfoContext);
+
+    let navigate = useNavigate({ userInfo })
+    const logout = () => {
+        localStorage.removeItem('userInfo')
+        setUserInfo(null)
+        navigate('/login')
+    }
     return (
         <Group position="center">
             <Menu
@@ -33,8 +38,9 @@ export default function UserMenu() {
                         <IconSettings size="1.5rem" stroke={2} color="#333" />
                     </ActionIcon>
                 </Menu.Target>
-                <Menu.Dropdown>
 
+
+                <Menu.Dropdown>
                     <Link
                         to="profile"
                     >
@@ -48,12 +54,9 @@ export default function UserMenu() {
                                 />
 
                                 <div>
-                                    <Text weight={500}>Abd </Text>
+                                    <Text weight={500}>{userInfo.username} </Text>
                                     <Text size="xs" color="dimmed">
-                                        abd@gmail
-                                    </Text>
-                                    <Text size="xs" color="dimmed">
-                                        A
+                                        {userInfo.email}
                                     </Text>
                                 </div>
 
@@ -66,7 +69,8 @@ export default function UserMenu() {
                     <Menu.Label>Settings</Menu.Label>
 
                     <Menu.Item
-                        icon={<IconLogout size="0.9rem" stroke={1.5} />}>
+                        icon={<IconLogout size="0.9rem" stroke={1.5} />}
+                        onClick={() => logout()}>
                         Logout
                     </Menu.Item>
                 </Menu.Dropdown>

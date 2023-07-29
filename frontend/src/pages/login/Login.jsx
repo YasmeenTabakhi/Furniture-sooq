@@ -1,118 +1,105 @@
-import { useToggle, upperFirst } from '@mantine/hooks';
-import { useForm } from '@mantine/form';
-import {
-  TextInput,
-  PasswordInput,
-  Text,
-  Paper,
-  Group,
-  PaperProps,
-  Button,
-  Divider,
-  Checkbox,
-  Anchor,
-  Stack,
-} from '@mantine/core';
-// import { GoogleButton, TwitterButton } from '../SocialButtons/SocialButtons';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import './form.css';
+import { TextInput, PasswordInput, Text, Paper, Group, Button, Divider, Checkbox, Anchor, Stack } from '@mantine/core';
+import { useNavigate, Link } from 'react-router-dom';
+import { UserInfoContext } from '../../context/UserInfoProvider';
 
 export default function AuthenticationForm() {
-  const [type, toggle] = useToggle(['login', 'register']);
-  const form = useForm({
-    initialValues: {
-      email: '',
-      name: '',
-      password: '',
-      terms: true,
-    },
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errors, setErrors] = useState({ email: '', password: '', unknown: '' });
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
 
-    validate: {
-      email: (val) => (/^\S+@\S+$/.test(val) ? null : 'Invalid email'),
-      password: (val) =>
-        val.length <= 6
-          ? 'Password should include at least 6 characters'
-          : null,
-    },
-  });
+  const validateEmail = (email) => {
+    // Regular expression for email validation
+    const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/i;
+    return emailRegex.test(email);
+  };
+
+
+  const validatePassword = (password) => {
+    return password.length >= 2;
+  };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!validateEmail(email)) {
+      setErrors({ ...errors, email: 'Invalid email format' });
+      return;
+    } else {
+      setErrors({ ...errors, email: '' });
+    }
+
+    if (!validatePassword(password)) {
+      setErrors({ ...errors, password: 'Password must be at least 1 characters long' });
+      return;
+    } else {
+      setErrors({ ...errors, password: '' });
+    }
+
+    try {
+      const response = await axios.post('http://localhost:8000/api/auth/login', { email, password });
+      localStorage.setItem('userInfo', JSON.stringify(response.data));
+
+      //use Context
+      setUserInfo(response.data)
+
+      navigate('/products');
+    } catch (error) {
+      setErrors({ ...errors, unknown: 'invalid email or password' });
+    }
+  };
 
   return (
     <Paper radius='md' p='xl' withBorder className='form' style={{margin:"3rem auto"}}>
       <Text size='lg' weight={500}>
-        Welcome to Mantine, {type} with
+        Welcome to Mantine, Log In with
       </Text>
-
-      {/* <Group grow mb="md" mt="md">
-        <GoogleButton radius="xl">Google</GoogleButton>
-        <TwitterButton radius="xl">Twitter</TwitterButton>
-      </Group> */}
 
       <Divider label='Or continue with email' labelPosition='center' my='lg' />
 
-      <form onSubmit={form.onSubmit(() => {})}>
-        <Stack>
-          {type === 'register' && (
-            <TextInput
-              label='Name'
-              placeholder='Your name'
-              value={form.values.name}
-              onChange={(event) =>
-                form.setFieldValue('name', event.currentTarget.value)
-              }
-              radius='md'
-            />
-          )}
+      <form onSubmit={onSubmit}>
+        <TextInput
+          required
+          label='Email'
+          placeholder='hello@mantine.dev'
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          radius='md'
+        />
 
-          <TextInput
-            required
-            label='Email'
-            placeholder='hello@mantine.dev'
-            value={form.values.email}
-            onChange={(event) =>
-              form.setFieldValue('email', event.currentTarget.value)
-            }
-            error={form.errors.email && 'Invalid email'}
-            radius='md'
-          />
+        {errors.email && (
+          <p className='validation-form'> {errors.email} </p>
+        )
+        }
 
-          <PasswordInput
-            required
-            label='Password'
-            placeholder='Your password'
-            value={form.values.password}
-            onChange={(event) =>
-              form.setFieldValue('password', event.currentTarget.value)
-            }
-            error={
-              form.errors.password &&
-              'Password should include at least 6 characters'
-            }
-            radius='md'
-          />
+        <PasswordInput
+          required
+          label='Password'
+          placeholder='Your password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          radius='md'
+        />
+        {errors.password && (
+          <p className='validation-form'>{errors.password}</p>
+        )
+        }
 
-          {type === 'register' && (
-            <Checkbox
-              label='I accept terms and conditions'
-              checked={form.values.terms}
-              onChange={(event) =>
-                form.setFieldValue('terms', event.currentTarget.checked)
-              }
-            />
-          )}
-        </Stack>
+        {errors.unknown && (
+          <p className='validation-form'>{errors.unknown}</p>
+        )
+        }
 
         <Group position='apart' mt='xl'>
-          <Anchor
-            component='button'
-            type='button'
-            color='dimmed'
-            onClick={() => toggle()}
-            size='xs'
-          >
-            {type === 'register'
-              ? 'Already have an account? Login'
-              : "Don't have an account? Register"}
+          <Anchor component='button' type='button' color='dimmed' size='xs'>
+            <Link to='/register'>Don't have an account? Register</Link>
           </Anchor>
           <Button type='submit' radius='xl'>
-            {upperFirst(type)}
+            Log In
           </Button>
         </Group>
       </form>

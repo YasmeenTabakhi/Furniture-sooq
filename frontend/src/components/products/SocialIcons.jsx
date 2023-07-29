@@ -1,5 +1,6 @@
 import React from 'react';
 import { Group, Text, createStyles } from '@mantine/core';
+import { Link } from 'react-router-dom'
 
 const useStyles = createStyles((theme) => ({
     socialIcon: {
@@ -33,9 +34,10 @@ export function SocialIcons() {
             <i className={`bi bi-twitter ${classes.socialIcon}`} style={{ color: '#1da1f2' }}></i>
             <i className={`bi bi-linkedin ${classes.socialIcon}`} style={{ color: '#0077b5' }}></i>
             <i className={`bi bi-envelope-fill ${classes.socialIcon}`} style={{ color: '#b21237' }}></i>
+
             <Text className={classes.wishlist}>
                 <i className="bi bi-balloon-heart-fill" style={{ fontSize: '24px', color: '#ff0077', }}></i>
-                GO TO WISHLIST
+                Go to cart
             </Text>
         </Group>
     );

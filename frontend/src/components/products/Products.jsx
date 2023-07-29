@@ -1,8 +1,11 @@
 import { Card, Image, Text, Group, Badge, createStyles, Center, Button, rem, Container, Grid, SimpleGrid } from '@mantine/core';
 import { IconGasStation, IconGauge, IconManualGearbox, IconUsers } from '@tabler/icons-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { PaginationProduct } from '../../components/products/PaginationProduct';
 import { Link } from "react-router-dom";
+import axios from 'axios'
+import { UserInfoContext } from '../../context/UserInfoProvider';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 const useStyles = createStyles((theme) => ({
@@ -49,6 +52,10 @@ const mockdata = [
 
 export function AllProducts({ selectedOption, search, show }) {
     const { classes } = useStyles();
+    const { userInfo, setUserInfo } = useContext(UserInfoContext);
+    const [count, setCount] = useState(1);
+
+
     const features = mockdata.map((feature) => (
         <Center key={feature.label}>
             <feature.icon size="1.05rem" className={classes.icon} stroke={1.5} />
@@ -58,10 +65,8 @@ export function AllProducts({ selectedOption, search, show }) {
 
 
     const [product, setProduct] = useState([])
+    const [singlepPoduct, setsinglepPoduct] = useState([])
 
-    // console.log(selectedOption)
-    // console.log(search)
-    // console.log(show)
 
     //Sort Product
     if (selectedOption === 'Default sorting') {
@@ -77,12 +82,97 @@ export function AllProducts({ selectedOption, search, show }) {
 
     }
 
+    // Get All Product in Data
     useEffect(() => {
-        fetch('https://fakestoreapi.com/products')
-            .then(res => res.json())
-            .then(json => setProduct(json))
-    }, [selectedOption])
+        const fetchData = async () => {
+            try {
+                const response = await axios.get('http://localhost:8000/api/product'); // Replace '/api/data' with your API endpoint
+                setProduct(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
 
+        fetchData();
+    }, [selectedOption]);
+
+
+    // Fetch Single New Data
+    const fetchDataSingle = async (productID) => {
+        try {
+            const token = JSON.parse(localStorage.getItem('userInfo')).token;
+            // Check Count Product
+            await axios.put(`http://localhost:8000/api/product/${productID}`, { count }, {
+                headers: {
+                    token: token,
+                },
+            });
+
+            // Add Product in Cart
+            const response = await axios.put(`http://localhost:8000/api/cart/${productID}`, { count }, {
+                headers: {
+                    token: token,
+                },
+            });
+
+            const updatedUserInfo = {
+                ...response.data.user,
+                token: token,
+            };
+            localStorage.setItem('userInfo', JSON.stringify(updatedUserInfo));
+            setUserInfo(updatedUserInfo);
+
+            // Update the quantity of the specific product with the given productID
+            setProduct((prevProducts) =>
+                prevProducts.map((product) =>
+                    product._id === productID
+                        ? { ...product, quantity: product.quantity - count }
+                        : product
+                )
+            );
+
+            toast.success(response.data.message, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        } catch (error) {
+            toast.error(error.response.data.message, {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    };
+
+
+    //Add cart in user 
+    const addCart = (productID) => {
+        if (userInfo) {
+            fetchDataSingle(productID)
+        } else {
+            toast.error('👮 You must be logged in!', {
+                position: "bottom-left",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "colored",
+            });
+        }
+    }
 
     //Pagination Product
     const [currentPage, setCurrentPage] = useState(1)
@@ -94,29 +184,31 @@ export function AllProducts({ selectedOption, search, show }) {
     const numbers = [...Array(npage + 1).keys()].slice(1)
 
     //filter Product and show Product
-    const getProduct = records.filter(item => {
-        if (search && item.title.toLowerCase().includes(search.toLowerCase())) {
-            return true;
-        }
-        return !search;
-    })
+    const getProduct = records
+        .filter(item => {
+            if (search && item.title.toLowerCase().includes(search.toLowerCase())) {
+                return true;
+            }
+            return !search;
+        })
         .map(item => {
             return (
                 <Grid gutter="md" key={item.id}>
                     <Grid.Col >
                         <Card withBorder radius="md" className={classes.card} >
                             <Card.Section className={classes.imageSection}>
-                                <Link to={`/singleProduct/${item.id}`}><Image src={item.image} alt="Tesla Model S" height='200' style={{ width: '100%' }} /></Link>
+                                <Link to={`/singleProduct/${item._id}`}><Image src={item.profilePhoto.url} alt="Tesla Model S" height='200' style={{ width: '100%' }} /></Link>
                             </Card.Section>
 
                             <Group position="apart" mt="md">
                                 <div>
-                                    <Text fw={500}>Tesla Model S</Text>
+                                    <Text fw={500}>{item.title}</Text>
                                     <Text fz="xs" c="dimmed">
-                                        Free recharge at any station
+                                        {item.description}
                                     </Text>
                                 </div>
-                                <Badge variant="outline">25% off</Badge>
+                                {/* <Badge variant="outline">25% off</Badge> */}
+                                <Badge variant="outline">Quantity {item.quantity}</Badge>
                             </Group>
 
                             <Card.Section className={classes.section}>
@@ -126,11 +218,11 @@ export function AllProducts({ selectedOption, search, show }) {
                                             ${item.price}
                                         </Text>
                                         <Text fz="sm" c="dimmed" fw={500} sx={{ lineHeight: 1 }} mt={3}>
-                                            per day
+                                            {/* per day */}
                                         </Text>
                                     </div>
 
-                                    <Button radius="xl" style={{ flex: 1 }}>
+                                    <Button radius="xl" style={{ flex: 1 }} onClick={() => addCart(item._id)}>
                                         Add to cart
                                     </Button>
                                 </Group>
@@ -142,7 +234,19 @@ export function AllProducts({ selectedOption, search, show }) {
         });
 
     return (
-        <Container my="md" size='xl'>
+        <Container my="md" size='xl' >
+            <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+            />
             <SimpleGrid cols={3} spacing="md" breakpoints={[{ maxWidth: 'sm', cols: 1 }]}>
                 {getProduct}
             </SimpleGrid>

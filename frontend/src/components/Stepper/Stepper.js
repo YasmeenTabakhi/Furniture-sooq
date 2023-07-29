@@ -1,14 +1,16 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { Stepper, Button, Group, Container } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import Cart from '../../pages/Cart/Cart';
 import Checkout from '../../pages/Checkout/Checkout';
 import Confirmation from '../../pages/Confirmation/Confirmation';
+import { UserInfoContext } from '../../context//UserInfoProvider'
 
-const FirstStep = () => {
+
+const FirstStep = ({ userInfo }) => {
   return (
     <div>
-      <Cart />
+      <Cart userInfo={userInfo} />
     </div>
   );
 };
@@ -27,13 +29,15 @@ const FinalStep = () => {
     </div>
   );
 };
+
+
 export default function Progress() {
   const [active, setActive] = useState(0);
   const nextStep = () => setActive((current) => (current < 3 ? current + 1 : current));
-  // const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
 
   const steps = [
-    <FirstStep />,
+    <FirstStep userInfo={userInfo} />,
     <SecondStep />,
     <FinalStep />,
   ];

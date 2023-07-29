@@ -3,7 +3,10 @@ import { Tab } from './Tabs'
 import { QuantityInput } from './Quantity'
 import { SocialIcons } from './SocialIcons'
 import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import axios from 'axios'
+import { UserInfoContext } from '../../context/UserInfoProvider';
+
 const useStyles = createStyles((theme) => ({
     showSingle: {
         marginBottom: '50px'
@@ -35,26 +38,35 @@ const useStyles = createStyles((theme) => ({
     },
 
 }));
+
+
 export function SingleProduct() {
     let { productId } = useParams()
-
     const [product, setProduct] = useState({})
+    const { userInfo, setUserInfo } = useContext(UserInfoContext);
 
     useEffect(() => {
-        fetch(`https://fakestoreapi.com/products/${productId}`)
-            .then(res => res.json())
-            .then(json => setProduct(json))
-    }, [])
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8000/api/product/${productId}`);
+                setProduct(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
 
     const { classes, theme } = useStyles();
-
     return (
-        <Container size="xl">
+        <Container size="xl" style={{ padding: '50px 0' }}>
+
             <Grid className={classes.showSingle}>
 
                 <Grid.Col md={6} lg={5}>
-                    <Image mx="auto" src={product.image} alt="Random image" style={{ objectFit: 'contain', width: '300px', height: '400px' }} />
+                    <Image mx="auto" src={product?.profilePhoto?.url} alt={product.title} style={{ objectFit: 'contain', width: '300px', height: '400px' }} />
                 </Grid.Col>
 
                 <Grid.Col md={6} lg={7}>
@@ -70,9 +82,16 @@ export function SingleProduct() {
                         <Text fw={700} color="dark">CLOTHING, FASHION</Text>
                     </Group>
 
+                    <Group fz={13}>
+                        <Text color="dimmed">QUANTITY: </Text>
+                        <Text fw={700} color="dark">{product.quantity}</Text>
+                    </Group>
+
                     {/* QuantityInput */}
                     <Text className={classes.Upline}></Text>
-                    <QuantityInput />
+
+                    <QuantityInput productId={productId} product={product} setProduct={setProduct} />
+
                     <Text className={classes.Upline}></Text>
 
                     <SocialIcons />

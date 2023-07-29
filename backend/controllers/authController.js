@@ -57,12 +57,12 @@ const login = asyncHandler(async (req, res) => {
 
     let user = await User.findOne({ email: req.body.email })
     if (!user) {
-        return res.status(400).json("invalid email")
+        return res.status(401).json("invalid email or password")
     }
 
     const isPasswordMatch = await bcrypt.compare(req.body.password, user.password)
     if (!isPasswordMatch) {
-        return res.status(400).json({ message: "invalid password" })
+        return res.status(401).json("invalid email or password")
     }
 
     const token = user.generateToken()
