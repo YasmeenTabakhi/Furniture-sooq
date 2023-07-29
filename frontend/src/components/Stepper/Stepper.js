@@ -132,7 +132,7 @@ export default function Progress() {
         pauseOnHover
         theme="colored"
       />
-      <Stepper active={active} onStepClick={setActive} breakpoint="sm" allowNextStepsSelect={false} style={{ width: "50%", margin: 'auto', padding: '20px' }} >
+      <Stepper active={active} onStepClick={false} breakpoint="sm" allowNextStepsSelect={false} style={{ width: "50%", margin: 'auto', padding: '20px' }} >
         <Stepper.Step label="First step" description="Shopping Cart">
           Step 1: Shopping Cart
         </Stepper.Step>

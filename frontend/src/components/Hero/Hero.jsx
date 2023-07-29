@@ -1,103 +1,182 @@
-import {
-  createStyles,
-  Overlay,
-  Container,
-  Title,
-  Button,
-  Text,
-  rem,
-} from '@mantine/core';
+import React from 'react';
+import { createStyles, rem, em, Box } from '@mantine/core';
+import { Link } from 'react-router-dom';
+import "./Hero.css"
 
 const useStyles = createStyles((theme) => ({
-  hero: {
-    position: 'relative',
-    backgroundImage:
-      'url(https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80)',
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
+  inner: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    paddingBottom: `calc(${theme.spacing.xl})`,
+    // Static media query
+    [`@media (max-width: ${em(800)})`]: {
+      flexDirection: "column"
+    },
   },
 
-  container: {
-    height: rem(700),
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
-    alignItems: 'flex-start',
-    paddingBottom: `calc(${theme.spacing.xl} * 6)`,
-    zIndex: 1,
-    position: 'relative',
 
-    [theme.fn.smallerThan('sm')]: {
-      height: rem(500),
-      paddingBottom: `calc(${theme.spacing.xl} * 3)`,
-    },
+  content: {
+    maxWidth: rem(480),
+    marginRight: `calc(${theme.spacing.xl} * 2)`,
   },
 
   title: {
-    color: theme.white,
-    fontSize: rem(60),
-    fontWeight: 900,
-    lineHeight: 1.1,
-
-    [theme.fn.smallerThan('sm')]: {
-      fontSize: rem(40),
-      lineHeight: 1.2,
-    },
-
-    [theme.fn.smallerThan('xs')]: {
-      fontSize: rem(28),
-      lineHeight: 1.3,
+    fontFamily: `Greycliff CF, ${theme.fontFamily}`,
+    fontSize: rem(44),
+    lineHeight: 1.2,
+    fontWeight: 500,
+    // Static media query
+    [`@media (max-width: ${em(800)})`]: {
+      right: "0",
+      left:"9px"
     },
   },
 
-  description: {
-    color: theme.white,
-    maxWidth: 600,
-
-    [theme.fn.smallerThan('sm')]: {
-      maxWidth: '100%',
-      fontSize: theme.fontSizes.sm,
+  image: {
+    width: '62vw',
+    height: '100%',
+    // Static media query
+    [`@media (max-width: ${em(800)})`]: {
+      width: "100%"
     },
   },
 
-  control: {
-    marginTop: `calc(${theme.spacing.xl} * 1.5)`,
-
-    [theme.fn.smallerThan('sm')]: {
-      width: '100%',
+  secondImage: {
+    // Static media query
+    [`@media (max-width: ${em(800)})`]: {
+      display: "none"
     },
-  },
+  }
+
+
+
 }));
 
-export default function HeroContentLeft() {
+
+
+
+export default function Hero() {
   const { classes } = useStyles();
-
   return (
-    <div className={classes.hero}>
-      <Overlay
-        gradient='linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, .65) 40%)'
-        opacity={1}
-        zIndex={0}
-      />
-      <Container className={classes.container}>
-        <Title className={classes.title}>
-          A fully featured React components library
-        </Title>
-        <Text className={classes.description} size='xl' mt='xl'>
-          Build fully functional accessible web applications faster than ever –
-          Mantine includes more than 120 customizable components and hooks to
-          cover you in any situation
-        </Text>
+    <div>
+      <div className={classes.inner}>
+        <img
+          src="https://onea.qodeinteractive.com/wp-content/uploads/2018/09/furniture-h-slider-1.jpg"
+          className={classes.image}
+        />
+        <div className={classes.content}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <h1  className={classes.title}
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                fontFamily: 'monospace',
+                fontWeight: 500,
+                position: 'relative',
+                right: '4rem',
+                top: '6rem',
+                fontSize: '20px',
+              }}
+             
+            >
+              NEW COLLECTION
+            </h1>
+            <h1
+              style={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                fontFamily: 'sans-serif',
+                fontWeight: 800,
+                position: 'relative',
+                right: '4rem',
+                top: '3rem',
+                fontSize: '50px',
+                width: '35vw',
+              }}
+              className={classes.title}
 
-        <Button
-          variant='gradient'
-          size='xl'
-          radius='xl'
-          className={classes.control}
-        >
-          Get started
-        </Button>
-      </Container>
+            >
+              BEST SELLING PRODUCTS
+            </h1>
+            <h4
+              style={{
+                color: 'grey',
+                marginLeft: '15px',
+                fontWeight: 500,
+                fontFamily: 'sans-serif',
+
+              }}
+            >
+              We believe that your home should be a sanctuary of style, functionality, and relaxation. Our
+              mission is to provide you with an unparalleled selection of modern furniture that not only
+              adds a touch of elegance to your living spaces but also ensures utmost comfort.
+            </h4>
+          </div>
+        </div>
+      </div>
+
+      <div className={classes.inner}>
+        <div className={classes.content}>
+          <div style={{ display: 'flex', flexDirection: 'column' }} >
+            <img src="https://bidsanddibs.com/wp-content/uploads/2018/10/furniture-h-img-1.jpg" alt="Blue armchair" className={classes.secondImage} />
+          </div>
+        </div>
+        <div>
+          <img
+            src="https://onea.qodeinteractive.com/wp-content/uploads/2018/09/h-4-img-2.jpg"
+            className={classes.image}
+          />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              position: 'relative',
+              bottom: '12rem',
+              fontFamily: 'sans-serif',
+              color: 'white',
+            }}
+          >
+            <h1 style={{ display: 'flex', justifyContent: 'center', fontSize: '2.5rem', margin: '0' }}>Modern Design</h1>
+            <Link to="/products" style={{ display: 'flex', justifyContent: 'center', fontSize: '12px', color: 'white' }}>
+              See Whole Collection
+            </Link>
+          </div>
+        </div>
+      </div>
+
+      <div className={classes.inner}>
+        <div>
+          <img
+            src="https://onea.qodeinteractive.com/wp-content/uploads/2018/09/h-4-img-3-768x514.jpg"
+            className={classes.image}
+          />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              position: 'relative',
+              bottom: '15rem',
+              right: '4rem',
+              fontFamily: 'sans-serif',
+              color: 'white',
+            }}
+          >
+            <h1 style={{ display: 'flex', justifyContent: 'flex-end', color: 'white', fontSize: '2.5rem', margin: '0' }}>
+              Wooden Magic
+            </h1>
+            <Link to="/products" style={{ display: 'flex', justifyContent: 'flex-end', fontSize: '12px', color: 'white' }}>
+              See Whole Collection
+            </Link>
+          </div>
+        </div>
+        <div className={classes.content}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <img src="https://onea.qodeinteractive.com/wp-content/uploads/2018/10/furniture-h-img-2.jpg" className={classes.secondImage} />
+           
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

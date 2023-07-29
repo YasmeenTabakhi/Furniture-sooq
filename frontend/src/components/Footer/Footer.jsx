@@ -7,6 +7,9 @@ import {
 
 const useStyles = createStyles((theme) => ({
   footer: {
+    marginTop: "10rem",
+    paddingTop: `calc(${theme.spacing.sm} )`,
+    paddingBottom: `calc(${theme.spacing.sm} )`,
     borderTop: `${rem(1)} solid ${theme.colorScheme === 'dark' ? theme.colors.dark[5] : theme.colors.gray[2]
       }`,
   },
@@ -16,7 +19,6 @@ const useStyles = createStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: `${theme.spacing.md} ${theme.spacing.md}`,
-
     [theme.fn.smallerThan('sm')]: {
       flexDirection: 'column',
     },
@@ -25,7 +27,9 @@ const useStyles = createStyles((theme) => ({
   links: {
     [theme.fn.smallerThan('sm')]: {
       marginTop: theme.spacing.lg,
-      marginBottom: theme.spacing.sm,
+      marginBottom: theme.spacing.md,
+      paddingTop: rem(1),
+      paddingBottom: rem(3),
     },
   },
 }));

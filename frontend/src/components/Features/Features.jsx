@@ -5,6 +5,8 @@ const useStyles = createStyles((theme) => ({
   feature: {
     position: 'relative',
     paddingTop: theme.spacing.xl,
+    marginTop: theme.spacing.lg,
+    marginBottom: "2rem",
     paddingLeft: theme.spacing.xl,
   },
 
@@ -59,23 +61,24 @@ function Feature({ icon: Icon, title, description, className, ...others }) {
 const mockdata = [
   {
     icon: IconTruck,
-    title: 'Free Worldwide shipping',
+    title: 'Free Worldwide Shipping',
     description:
-      'As electricity builds up inside its body, it becomes more aggressive. One theory is that the electricity.',
+      'Get your dream furniture delivered to your doorstep with our hassle-free worldwide shipping service. No matter where you are, we ensure your order reaches you promptly and securely.',
   },
   {
     icon: IconCertificate,
-    title: 'Best Quality Product',
+    title: 'Best Quality Products',
     description:
-      'Slakoth’s heart beats just once a minute. Whatever happens, it is content to loaf around motionless.',
+      'Experience the epitome of comfort and style with our handpicked selection of top-quality furniture. Each piece is meticulously chosen to meet our high standards, ensuring your home is adorned with nothing but the best.',
   },
   {
     icon: IconCoin,
     title: 'Very Affordable Pricing',
     description:
-      'Thought to have gone extinct, Relicanth was given a name that is a variation of the name of the person who discovered.',
+      'Discover modern luxury without breaking the bank. We offer competitive and affordable pricing, so you can furnish your home with sleek and comfortable furniture, all within your budget.',
   },
 ];
+
 
 export default function FeaturesAsymmetrical() {
   const items = mockdata.map((item) => <Feature {...item} key={item.title} />);
